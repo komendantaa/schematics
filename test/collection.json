@@ -1,0 +1,9 @@
+{
+	"$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+	"schematics": {
+		"nestjs-mock": {
+			"description": "A blank schematic.",
+			"factory": "./nestjs-mock/index#nestjsMock"
+		}
+	}
+}
