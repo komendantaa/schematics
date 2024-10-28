@@ -7,9 +7,9 @@ import { QueryParamsDto } from '@services/query';
 import { <%=Name%>DtoClear, <%=Name%>Input } from '../interfaces/<%=name%>.dto';
 import { Exception, toObject, Validation } from '@utils';
 import { <%=Name%> } from '../interfaces/<%=name%>.entity';
-import { <%=Names%>ValidationService } from '../service/verification/<%=names%>-validation.service';
+import { <%=Names%>ValidationService } from '../services/verification/<%=names%>-validation.service';
 import { <%=Name%>Action } from '../const/<%=name%>.const';
-import { <%=Names%>PermissionsService } from '../service/verification/<%=names%>-permissions.service';
+import { <%=Names%>PermissionsService } from '../services/verification/<%=names%>-permissions.service';
 import { HttpStatus } from '@nestjs/common/enums/http-status.enum';
 
 const API_TAG = '<%=Names%>';
@@ -26,7 +26,7 @@ export class <%=Name%>Controller {
   @Post()
   @Auth()
   async create(@Body() data: <%=Name%>DtoClear, @UserParam() user: UserPayload) {
-    await this.permsSrv.checkPermissions(null, user, <%=Name%>Action.CREATE);
+    await this.permsSrv.check(null, user, <%=Name%>Action.CREATE);
 
     const errors = await this.validSrv.validate(data);
     if (errors.length) throw Validation.makeException(errors);
@@ -41,14 +41,14 @@ export class <%=Name%>Controller {
   @Get(':id')
   @Auth()
   async get(@Param() param: ParamIdDto, @UserParam() user: UserPayload): Promise<<%=Name%>> {
-    await this.permsSrv.checkPermissions(param.id, user, <%=Name%>Action.READ);
+    await this.permsSrv.check(param.id, user, <%=Name%>Action.READ);
     return this.mainSrv.getOne(param.id);
   }
 
   @Patch(':id')
   @Auth()
   async patch(@Param() param: ParamIdDto, @Body() data: <%=Name%>DtoClear, @UserParam() user: UserPayload) {
-    const found = await this.permsSrv.checkPermissions(param.id, user, <%=Name%>Action.UPDATE);
+    const found = await this.permsSrv.check(param.id, user, <%=Name%>Action.UPDATE);
 
     const errors = await this.validSrv.validate({ _id: param.id, ...data });
     if (errors.length) throw Validation.makeException(errors);
@@ -63,7 +63,7 @@ export class <%=Name%>Controller {
   @Delete(':id')
   @Auth()
   async delete(@Param() param: ParamIdDto, @UserParam() user: UserPayload): Promise<<%=Name%>> {
-    await this.permsSrv.checkPermissions(param.id, user, <%=Name%>Action.DELETE);
+    await this.permsSrv.check(param.id, user, <%=Name%>Action.DELETE);
 
     const deleted = await this.mainSrv.delete(param.id);
     if (!deleted) throw Exception.internal('deleting <%=Name%>');
@@ -93,7 +93,7 @@ export class <%=Names%>Controller {
   @Auth({ admin: true })
   @HttpCode(HttpStatus.OK)
   async deleteMany(@Body() data: ParamIdsDto, @UserParam() admin: UserPayload) {
-    await this.permsSrv.checkPermissions(data.ids, admin, <%=Name%>Action.DELETE_MANY);
+    await this.permsSrv.checkMany(data.ids, admin, <%=Name%>Action.DELETE);
     const result = await this.mainSrv.deleteManyByIds(data.ids);
     return { message: `Removed ${result?.deletedCount} successfully` };
   }

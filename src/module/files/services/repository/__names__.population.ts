@@ -1,12 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { FeaturePopulation } from '@interfaces';
+import { <%=Name%>FeatureInterfaces } from '../../const/<%=name%>.const';
 
 @Injectable()
-export class <%=Names%>Population {
-  get Detailed() {
-    return [];
-  }
-
-  get Paginated() {
-    return [];
-  }
-}
+export class <%=Names%>Population extends FeaturePopulation<<%=Name%>FeatureInterfaces> {}

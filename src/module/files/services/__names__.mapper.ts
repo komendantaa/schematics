@@ -1,14 +1,13 @@
-import { <%=Name%>, <%=Name%>Detailed } from '../interfaces/<%=name%>.entity';
 import { Injectable } from '@nestjs/common';
 import { FeatureMapper } from '@interfaces';
+import { <%=Name%>, <%=Name%>Detailed } from '../interfaces/<%=name%>.entity';
+import { <%=Name%>FeatureInterfaces } from '../const/<%=name%>.const';
 
-const idProps: (keyof <%=Name%>Detailed)[] = [];
-
-type DocType = <%=Name%>Detailed | <%=Name%>;
+const ids: (keyof <%=Name%>Detailed)[] = [];
 
 @Injectable()
-export class <%=Names%>Mapper extends FeatureMapper<DocType, <%=Name%>Detailed> {
+export class <%=Names%>Mapper extends FeatureMapper<<%=Name%>FeatureInterfaces> {
   constructor() {
-    super(idProps);
+    super({ ids });
   }
 }
