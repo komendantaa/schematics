@@ -15,12 +15,12 @@ export class <%=Names%>ValidationService extends FeatureValidation<<%=Name%>Feat
     super({ repo });
   }
 
-  async validate(data: Data, Dto: ClassConstructor<<%=Name%>Dto> = <%=Name%>Dto): Promise<ValidationError[]> {
-    const { _id } = data;
+  async validate(dto: Data, Dto: ClassConstructor<<%=Name%>Dto> = <%=Name%>Dto): Promise<ValidationError[]> {
+    const { _id } = dto;
 
-    const errors: ValidationError[] = await Validation.validateDto(data, Dto);
+    const errors: ValidationError[] = await Validation.validateDto(dto, Dto);
 
-    await this.checkTitle(data, errors);
+    await this.checkTitle(dto, errors);
 
     return errors;
   }

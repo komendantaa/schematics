@@ -25,13 +25,13 @@ export class <%=Name%>Controller {
 
   @Post()
   @Auth()
-  async create(@Body() data: <%=Name%>DtoClear, @UserParam() user: UserPayload) {
+  async create(@Body() dto: <%=Name%>DtoClear, @UserParam() user: UserPayload) {
     await this.permsSrv.check(null, user, <%=Name%>Action.CREATE);
 
-    const errors = await this.validSrv.validate(data);
+    const errors = await this.validSrv.validate(dto);
     if (errors.length) throw Validation.makeException(errors);
 
-    const createData: <%=Name%>Input = { ...data };
+    const createData: <%=Name%>Input = { ...dto };
     const created = await this.mainSrv.create(createData);
     if (!created) throw Exception.internal('creating <%=Name%>');
 
@@ -40,20 +40,20 @@ export class <%=Name%>Controller {
 
   @Get(':id')
   @Auth()
-  async get(@Param() param: ParamIdDto, @UserParam() user: UserPayload): Promise<<%=Name%>> {
+  async get(@Param() param: ParamIdDto, @UserParam() user: UserPayload) {
     await this.permsSrv.check(param.id, user, <%=Name%>Action.READ);
-    return this.mainSrv.getOne(param.id);
+    return this.mainSrv.getOneDetailed(param.id);
   }
 
   @Patch(':id')
   @Auth()
-  async patch(@Param() param: ParamIdDto, @Body() data: <%=Name%>DtoClear, @UserParam() user: UserPayload) {
+  async patch(@Param() param: ParamIdDto, @Body() dto: <%=Name%>DtoClear, @UserParam() user: UserPayload) {
     const found = await this.permsSrv.check(param.id, user, <%=Name%>Action.UPDATE);
 
-    const errors = await this.validSrv.validate({ _id: param.id, ...data });
+    const errors = await this.validSrv.validate({ _id: param.id, ...dto });
     if (errors.length) throw Validation.makeException(errors);
 
-    const updateData: <%=Name%>Input = { ...toObject(found), ...data };
+    const updateData: <%=Name%>Input = { ...toObject(found), ...dto };
     const updated = await this.mainSrv.update(param.id, updateData);
     if (!updated) throw Exception.internal('updating <%=Name%>');
 
@@ -62,7 +62,7 @@ export class <%=Name%>Controller {
 
   @Delete(':id')
   @Auth()
-  async delete(@Param() param: ParamIdDto, @UserParam() user: UserPayload): Promise<<%=Name%>> {
+  async delete(@Param() param: ParamIdDto, @UserParam() user: UserPayload) {
     await this.permsSrv.check(param.id, user, <%=Name%>Action.DELETE);
 
     const deleted = await this.mainSrv.delete(param.id);
@@ -92,9 +92,9 @@ export class <%=Names%>Controller {
   // @Post('delete-many')
   @Auth({ admin: true })
   @HttpCode(HttpStatus.OK)
-  async deleteMany(@Body() data: ParamIdsDto, @UserParam() admin: UserPayload) {
-    await this.permsSrv.checkMany(data.ids, admin, <%=Name%>Action.DELETE);
-    const result = await this.mainSrv.deleteManyByIds(data.ids);
+  async deleteMany(@Body() dto: ParamIdsDto, @UserParam() admin: UserPayload) {
+    await this.permsSrv.checkMany(dto.ids, admin, <%=Name%>Action.DELETE);
+    const result = await this.mainSrv.deleteManyByIds(dto.ids);
     return { message: `Removed ${result?.deletedCount} successfully` };
   }
 }

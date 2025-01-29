@@ -6,7 +6,7 @@
       "factory": "./mock/index#mock"
     },
     "module": {
-      "description": "A blank schematic.",
+      "description": "Module for NestJS",
       "factory": "./module/index#module"
     }
   }

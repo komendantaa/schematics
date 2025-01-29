@@ -1,9 +1,9 @@
 import { PaginatedData } from '@services/query';
 import { ApiProperty } from '@nestjs/swagger';
 import { CommonEntity } from '@interfaces';
-import { I<%=Name%>Model } from './<%=name%>.interface';
+import { I<%=Name%> } from './<%=name%>.interface';
 
-export class <%=Name%> extends CommonEntity implements I<%=Name%>Model {
+export class <%=Name%> extends CommonEntity implements I<%=Name%> {
   title: string;
 }
 

@@ -5,7 +5,6 @@ import { <%=Names%>Service } from './services/<%=names%>.service';
 import { <%=Name%>Schema } from './interfaces/<%=name%>.schema';
 import { <%=Names%>Repository } from './services/repository/<%=names%>.repository';
 import { <%=Names%>Population } from './services/repository/<%=names%>.population';
-import { <%=Name%>Controller, <%=Names%>Controller } from './controller/<%=names%>.controller';
 import { <%=Names%>Mapper } from './services/<%=names%>.mapper';
 import { <%=Names%>ValidationService } from './services/verification/<%=names%>-validation.service';
 import { <%=Names%>PermissionsService } from './services/verification/<%=names%>-permissions.service';
@@ -14,7 +13,7 @@ import { QueryModule } from '@services/query';
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: CollectionName.<%=NAMES%>, schema: <%=Name%>Schema }]), QueryModule],
-  controllers: [<%=Name%>Controller, <%=Names%>Controller],
+  controllers: [],
   providers: [
     <%=Names%>Service,
     <%=Names%>Repository,

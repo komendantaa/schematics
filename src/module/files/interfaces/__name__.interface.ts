@@ -1,3 +1,3 @@
-export interface I<%=Name%>Model {
+export interface I<%=Name%> {
   title: string;
 }
