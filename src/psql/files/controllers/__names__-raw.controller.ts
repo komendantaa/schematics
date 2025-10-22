@@ -3,7 +3,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { Auth, UserParam, UserPayload } from '@auth';
 import { <%=Names%>Service } from '../services/<%=names%>.service';
 import { ParamIdDto, ParamIdsDto } from '@interfaces';
-import { QueryParamsDto } from '@services/query';
+import { QueryParamsDto } from '@modules/query';
 import { <%=Name%>DtoClear, <%=Name%>Input } from '../interfaces/<%=name%>.dto';
 import { Exception, toObject, Validation } from '@utils';
 import { <%=Names%>ValidationService } from '../services/verification/<%=names%>-validation.service';
@@ -16,14 +16,14 @@ const API_TAG = '<%=Names%>';
 @Controller('<%=name%>')
 export class <%=Name%>Controller {
   constructor(
-      private mainSrv: <%=Names%>Service,
-      private validSrv: <%=Names%>ValidationService,
-      private permsSrv: <%=Names%>PermissionsService,
-) {}
+    private mainSrv: <%=Names%>Service,
+    private validSrv: <%=Names%>ValidationService,
+    private permsSrv: <%=Names%>PermissionsService,
+  ) {}
 
-@Post()
-@Auth()
-async create(@Body() dto: <%=Name%>DtoClear, @UserParam() user: UserPayload) {
+  @Post()
+  @Auth()
+  async create(@Body() dto: <%=Name%>DtoClear, @UserParam() user: UserPayload) {
     await this.permsSrv.create(user);
 
     const errors = await this.validSrv.validate(dto);
@@ -36,16 +36,16 @@ async create(@Body() dto: <%=Name%>DtoClear, @UserParam() user: UserPayload) {
     return created;
   }
 
-@Get(':id')
-@Auth()
-async get(@Param() param: ParamIdDto, @UserParam() user: UserPayload) {
+  @Get(':id')
+  @Auth()
+  async get(@Param() param: ParamIdDto, @UserParam() user: UserPayload) {
     await this.permsSrv.read(param.id, user);
     return this.mainSrv.getOneDetailed(param.id);
   }
 
-@Patch(':id')
-@Auth()
-async patch(@Param() param: ParamIdDto, @Body() dto: <%=Name%>DtoClear, @UserParam() user: UserPayload) {
+  @Patch(':id')
+  @Auth()
+  async patch(@Param() param: ParamIdDto, @Body() dto: <%=Name%>DtoClear, @UserParam() user: UserPayload) {
     const found = await this.permsSrv.update(param.id, user);
 
     const errors = await this.validSrv.validate({ _id: param.id, ...dto });
@@ -58,9 +58,9 @@ async patch(@Param() param: ParamIdDto, @Body() dto: <%=Name%>DtoClear, @UserPar
     return updated;
   }
 
-@Delete(':id')
-@Auth()
-async delete(@Param() param: ParamIdDto, @UserParam() user: UserPayload) {
+  @Delete(':id')
+  @Auth()
+  async delete(@Param() param: ParamIdDto, @UserParam() user: UserPayload) {
     const found = await this.permsSrv.delete(param.id, user);
 
     const count = await this.mainSrv.delete(param.id);
@@ -74,26 +74,26 @@ async delete(@Param() param: ParamIdDto, @UserParam() user: UserPayload) {
 @Controller('<%=names%>')
 export class <%=Names%>Controller {
   constructor(
-      private mainSrv: <%=Names%>Service,
-      private permsSrv: <%=Names%>PermissionsService
-) {}
+    private mainSrv: <%=Names%>Service,
+    private permsSrv: <%=Names%>PermissionsService
+  ) {}
 
-@Get('paginated')
-@Auth()
-async getAllPaginated(@Query() queryParams: QueryParamsDto, @UserParam() user: UserPayload) {
+  @Get('paginated')
+  @Auth()
+  async getAllPaginated(@Query() queryParams: QueryParamsDto, @UserParam() user: UserPayload) {
     return this.mainSrv.getAllPaginated(queryParams, user);
   }
 
   // @Get('structured')
-@Auth()
-async getAllStructured() {
+  @Auth()
+  async getAllStructured() {
     return this.mainSrv.getAllPublic();
   }
 
   // @Post('delete-many')
-@Auth({ admin: true })
-@HttpCode(HttpStatus.OK)
-async deleteMany(@Body() dto: ParamIdsDto, @UserParam() admin: UserPayload) {
+  @Auth({ admin: true })
+  @HttpCode(HttpStatus.OK)
+  async deleteMany(@Body() dto: ParamIdsDto, @UserParam() admin: UserPayload) {
     await this.permsSrv.deleteMany(dto.ids, admin);
     const count = await this.mainSrv.deleteManyByIds(dto.ids);
     return { message: `Removed ${count} successfully` };

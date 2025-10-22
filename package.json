@@ -4,7 +4,8 @@
   "description": "A blank schematics",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "g:m": "npm run build && schematics .:module --dry-run=false",
+    "g:mongo": "npm run build && schematics .:module --dry-run=false",
+    "g:psql": "npm run build && schematics .:psql --dry-run=false",
     "test": "npm run build && jasmine src/**/*_spec.js"
   },
   "keywords": [

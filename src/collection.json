@@ -6,8 +6,12 @@
       "factory": "./mock/index#mock"
     },
     "module": {
-      "description": "Module for NestJS",
+      "description": "Mongo module for NestJS",
       "factory": "./module/index#module"
+    },
+    "psql": {
+      "description": "PostgresSQL Sequelize module for NestJS",
+      "factory": "./psql/index#module"
     }
   }
 }
