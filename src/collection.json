@@ -12,6 +12,10 @@
     "psql": {
       "description": "PostgresSQL Sequelize module for NestJS",
       "factory": "./psql/index#module"
+    },
+    "psql_v2": {
+      "description": "PostgresSQL Sequelize module for NestJS",
+      "factory": "./psql_v2/index#module"
     }
   }
 }

@@ -4,8 +4,9 @@
   "description": "A blank schematics",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "g:mongo": "npm run build && schematics .:module --dry-run=false",
-    "g:psql": "npm run build && schematics .:psql --dry-run=false",
+    "g:mongo": "npm run build && schematics .:module --no-dry-run",
+    "g:psql": "npm run build && schematics .:psql --no-dry-run",
+    "g:psql_v2": "npm run build && schematics .:psql_v2 --no-dry-run",
     "test": "npm run build && jasmine src/**/*_spec.js"
   },
   "keywords": [
@@ -20,6 +21,7 @@
     "typescript": "~5.5.2"
   },
   "devDependencies": {
+    "@angular-devkit/schematics-cli": "^21.2.7",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
     "jasmine": "^5.0.0",
