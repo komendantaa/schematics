@@ -2,10 +2,13 @@ import { Controller } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { FeatureController, FeaturesController } from '@interfaces';
 
+import { <%=Name%>FeatureInstances, <%=Name%>FeatureInterfaces } from '../const/<%=name%>-feat.const';
 import { <%=Names%>Service } from '../services/<%=names%>.service';
 import { <%=Names%>ValidationService } from '../services/verification/<%=names%>-validation.service';
 import { <%=Names%>PermissionsService } from '../services/verification/<%=names%>-permissions.service';
-import { <%=Name%>FeatureInstances, <%=Name%>FeatureInterfaces } from '../const/<%=name%>-feat.const';
+import { <%=Names%>ExportService } from '../services/export/<%=names%>-export.service';
+import { <%=Names%>PaginationService } from '../services/pagination/<%=names%>-pagination.service';
+
 
 const API_TAG = '<%=Names%>';
 
@@ -20,7 +23,7 @@ export class <%=Name%>Controller extends FeatureController.Typed<<%=Name%>Featur
     private validSrv: <%=Names%>ValidationService,
     private permsSrv: <%=Names%>PermissionsService,
   ) {
-    super({ mainSrv, validSrv, permsSrv, instances: <%=Name%>FeatureInstances });
+    super({ instances: <%=Name%>FeatureInstances, mainSrv, validSrv, permsSrv });
   }
 }
 
@@ -34,7 +37,9 @@ export class <%=Names%>Controller extends FeaturesController.Typed<<%=Name%>Feat
     private mainSrv: <%=Names%>Service,
     private validSrv: <%=Names%>ValidationService,
     private permsSrv: <%=Names%>PermissionsService,
+    private exportSrv: <%=Names%>ExportService,
+    private paginationSrv: <%=Names%>PaginationService,
   ) {
-    super({ mainSrv, validSrv, permsSrv, instances: <%=Name%>FeatureInstances });
+    super({ instances: <%=Name%>FeatureInstances, mainSrv, validSrv, permsSrv, exportSrv, paginationSrv });
   }
 }

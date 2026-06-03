@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { QueryService } from '@modules/query';
 import { InjectModel } from '@nestjs/sequelize';
 import { FeatureRepository } from '@interfaces';
 
@@ -12,9 +11,8 @@ export class <%=Names%>Repository extends FeatureRepository<<%=Name%>FeatureInte
   constructor(
     @InjectModel(<%=Name%>)
     private model: typeof <%=Name%>,
-    private querySrv: QueryService,
     private inclusion: <%=Names%>Inclusion,
   ) {
-    super({ featureName: '<%=Name%>', model, querySrv, inclusion });
+    super({ featureName: '<%=Name%>', model, inclusion });
   }
 }

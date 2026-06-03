@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { QueryModule } from '@modules/query';
 
 import { <%=Names%>Service } from './services/<%=names%>.service';
 import { <%=Name%> } from './interfaces/<%=name%>.entity';
@@ -11,8 +10,7 @@ import { <%=Names%>ValidationService } from './services/verification/<%=names%>-
 import { <%=Names%>PermissionsService } from './services/verification/<%=names%>-permissions.service';
 
 @Module({
-  imports: [SequelizeModule.forFeature([<%=Name%>]), QueryModule],
-  controllers: [],
+  imports: [SequelizeModule.forFeature([<%=Name%>])],
   providers: [
     <%=Names%>Service,
     <%=Names%>Repository,
